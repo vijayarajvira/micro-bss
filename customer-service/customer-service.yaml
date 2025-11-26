@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service
+  namespace: micro-bss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-service
+  template:
+    metadata:
+      labels:
+        app: customer-service
+    spec:
+      containers:
+        - name: customer-service
+          image: vijayarajvira/customer-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3001
+       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  namespace: micro-bss
+spec:
+  selector:
+    app: customer-service
+  ports:
+    - port: 3001
+      targetPort: 3001

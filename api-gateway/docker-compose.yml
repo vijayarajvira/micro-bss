@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  customer-service:
+    build: ./customer-service
+    image: localhost:5000/customer-service:latest
+
+  order-service:
+    build: ./order-service
+    image: localhost:5000/order-service:latest
+
+  billing-service:
+    build: ./billing-service
+    image: localhost:5000/billing-service:latest
+
+  api-gateway:
+    build: ./api-gateway
+    image: localhost:5000/api-gateway:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - customer-service
+      - order-service
+      - billing-service
